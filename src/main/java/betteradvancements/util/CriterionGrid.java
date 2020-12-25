@@ -1,10 +1,5 @@
 package betteradvancements.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Criterion;
@@ -12,6 +7,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 // An arrangement of criteria into rows and columns
 public class CriterionGrid {
@@ -93,7 +94,8 @@ public class CriterionGrid {
         for (String criterion : criteria.keySet()) {
             if (progress.getCriterionProgress(criterion).isObtained()) {
                 if (detailLevel.showObtained()) {
-                    IFormattableTextComponent text = new StringTextComponent(" + ").mergeStyle(TextFormatting.GREEN);
+                    IFormattableTextComponent text = new TranslationTextComponent(
+                            "betteradvancements.advancements.info.obtained").mergeStyle(TextFormatting.GREEN);
                     IFormattableTextComponent text2 = new StringTextComponent(criterion).mergeStyle(TextFormatting.WHITE);
                     text.append(text2);
                     cellContents.add(text.getString());
@@ -101,7 +103,8 @@ public class CriterionGrid {
             }
             else {
                 if (detailLevel.showUnobtained()) {
-                    IFormattableTextComponent text = new StringTextComponent(" x ").mergeStyle(TextFormatting.DARK_RED);
+                    IFormattableTextComponent text = new TranslationTextComponent(
+                            "betteradvancements.advancements.info.unobtained").mergeStyle(TextFormatting.DARK_RED);
                     IFormattableTextComponent text2 = new StringTextComponent(criterion).mergeStyle(TextFormatting.WHITE);
                 	text.append(text2);
                     cellContents.add(text.getString());
@@ -111,8 +114,11 @@ public class CriterionGrid {
         }
 
         if (!detailLevel.showUnobtained()) {
-            IFormattableTextComponent text = new StringTextComponent(" x ").mergeStyle(TextFormatting.DARK_RED);
-            IFormattableTextComponent text2 = new StringTextComponent(numUnobtained + " remaining").mergeStyle(TextFormatting.WHITE, TextFormatting.ITALIC);
+            IFormattableTextComponent text = new TranslationTextComponent(
+                    "betteradvancements.advancements.info.unobtained").mergeStyle(TextFormatting.DARK_RED);
+            IFormattableTextComponent text2 = new TranslationTextComponent(
+                    "betteradvancements.advancements.info.unobtained2",
+                    numUnobtained).mergeStyle(TextFormatting.WHITE, TextFormatting.ITALIC);
         	text.append(text2);
             cellContents.add(text.getString());
         }
